@@ -1,0 +1,21 @@
+
+Step 1: Go to the resources section on Git
+Step 2: Download the Source Code Zip.
+Step 3: Unzip the zipped file.
+Step 4: Launch VSCode and open the unzipped file via PlatformIO's Open Project.
+(In the following steps This is how I am thinking it is done. Please correct me if and where I am wrong)
+Step 5: Since I am needing the configuration files for the BL Touch and not wanting it with high speed, I would access the following file location. Configuration Files => E3V2 Templates => BLTouch-3x3.
+Step 6: In the BLTouch-3x3 folder select both Config.h & config_adv.h files, right click them and select copy.
+Step 7: Go to the Marlin section, right click and paste to replace the existing Config.h & config_adv.h files with the ones from the BLTouch-3x3 folder.
+Step 8: Make required changes.
+Step 9: Save everything
+A question I have before doing step 10 above (compiling the firmware) is there anything I need to delete and remove from the root folder or everything is fine left in the root folder and can continue with step 10 compiling the build?
+Step 10: Compile Build with checkmark icon.
+Step 11: Grab the newly created .bin file and put on empty SD card.
+Step 12: Plug SD card into printer which should be powered off.
+Step 11: Power printer on and printer should flash to the new firmware.
+Once printer is fully flashed and at the menu screen, you can access the printers info section and see the updated firmware there.
+Step 12: Once you have the firmware flashed, reset EEPROM and delete the .bin file from the SD card.
+Step 13: Launch your slicer software as we need to now make a few changes to your machine.
+Step 14: Change your build size Z-axis to 350mm to match what was changed in the firmware.
+Step 15: In your Start G-Code add both M420 S1 & G29.
