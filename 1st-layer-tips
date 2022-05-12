@@ -1,0 +1,9 @@
+st Layer settings
+
+To get the best 1st layer and adhesion we recommend the following settings:
+
+    150% 1st layer width
+    0.3mm 1st layer height
+    Print SLOW 25-30% speed or 20mm/s
+    Use a skirt set 2-3mm from the part with 2-3 outlines. Use this to adjust/check the leveling result.
+    Use the Babystepping feature mentioned on the previous page to live adjust your Z height.
