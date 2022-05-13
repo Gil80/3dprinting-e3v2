@@ -1498,8 +1498,8 @@
       #define Z_MAX_POS 500
       #define MACHINE_SIZE "235x235x500"
     #else
-      #define X_BED_SIZE 235
-      #define Y_BED_SIZE 235
+      #define X_BED_SIZE 220
+      #define Y_BED_SIZE 220
       #define Z_MAX_POS 250
       #define MACHINE_SIZE "235x235x250"
     #endif

@@ -1,6 +1,6 @@
 ## Steps per mm measured
 
-send: M92 Z80.40
+send: M92 Z401.20
 Send: M92 Y80.71
 send: M92 E96.5
 send: M500
