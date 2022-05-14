@@ -5,3 +5,10 @@ G1 E50 F420 // this gave good results
 My maximum reliable XY feedrate is 210 mm per second for 0.4mm nozzle and 0.2mm layer height.
 
 https://teachingtechyt.github.io/calibration.html#accel
+
+Safer numbers are:
+My safe reliable extrusion rate is 14.43 mm³ per second.
+G91
+G1 E50 F360
+
+My safe reliable XY feedrate is 180 mm per second for 0.4mm nozzle and 0.2mm layer height.
