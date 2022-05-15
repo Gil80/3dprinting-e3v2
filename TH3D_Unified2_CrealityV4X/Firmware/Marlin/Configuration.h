@@ -116,6 +116,63 @@
 // If you have the EZNeo wired with your own 5V power provided, specify the pin used below.
 //#define NEOPIXEL_PIN PA4
 
+
+/**
+ * Bed Skew Compensation
+ *
+ * This feature corrects for misalignment in the XYZ axes.
+ *
+ * Take the following steps to get the bed skew in the XY plane:
+ *  1. Print a test square (e.g., https://www.thingiverse.com/thing:2563185)
+ *  2. For XY_DIAG_AC measure the diagonal A to C
+ *  3. For XY_DIAG_BD measure the diagonal B to D
+ *  4. For XY_SIDE_AD measure the edge A to D
+ *
+ * Marlin automatically computes skew factors from these measurements.
+ * Skew factors may also be computed and set manually:
+ *
+ *  - Compute AB     : SQRT(2*AC*AC+2*BD*BD-4*AD*AD)/2
+ *  - XY_SKEW_FACTOR : TAN(PI/2-ACOS((AC*AC-AB*AB-AD*AD)/(2*AB*AD)))
+ *
+ * If desired, follow the same procedure for XZ and YZ.
+ * Use these diagrams for reference:
+ *
+ *    Y                     Z                     Z
+ *    ^     B-------C       ^     B-------C       ^     B-------C
+ *    |    /       /        |    /       /        |    /       /
+ *    |   /       /         |   /       /         |   /       /
+ *    |  A-------D          |  A-------D          |  A-------D
+ *    +-------------->X     +-------------->X     +-------------->Y
+ *     XY_SKEW_FACTOR        XZ_SKEW_FACTOR        YZ_SKEW_FACTOR
+ */
+#define SKEW_CORRECTION
+
+#if ENABLED(SKEW_CORRECTION)
+  // Input all length measurements here:
+  #define XY_DIAG_AC 282.8427124746
+  #define XY_DIAG_BD 282.8427124746
+  #define XY_SIDE_AD 200
+
+  // Or, set the default skew factors directly here
+  // to override the above measurements:
+  #define XY_SKEW_FACTOR -0.003
+
+  //#define SKEW_CORRECTION_FOR_Z
+  #if ENABLED(SKEW_CORRECTION_FOR_Z)
+    #define XZ_DIAG_AC 282.8427124746
+    #define XZ_DIAG_BD 282.8427124746
+    #define YZ_DIAG_AC 282.8427124746
+    #define YZ_DIAG_BD 282.8427124746
+    #define YZ_SIDE_AD 200
+    #define XZ_SKEW_FACTOR 0.0
+    #define YZ_SKEW_FACTOR 0.0
+  #endif
+
+  // Enable this option for M852 to set skew at runtime
+  #define SKEW_CORRECTION_GCODE
+#endif
+
+
 //===========================================================================
 // *************************  END PRINTER SECTION   *************************
 //===========================================================================
@@ -131,10 +188,10 @@
 #define EZABL_PROBE_EDGE 35
 
 // Fast Probing - Works with most machines and all EZABL sensors (8mm/s)
-#define EZABL_FASTPROBE
+//#define EZABL_FASTPROBE
 
 // Superfast Probing - Only works with the EZABL Pro Sensors (15mm/s)
-//#define EZABL_SUPERFASTPROBE
+#define EZABL_SUPERFASTPROBE
 
 // Heaters on During Probing - Heaters will stay on during probing - May reduce accuracy do not use unless told to by support
 //#define HEATERS_ON_DURING_PROBING
@@ -251,7 +308,7 @@
 //#define REVERSE_KNOB_DIRECTION
 
 // If you have a 5015 fan that whines when under 100% speed uncomment the below line.
-#define FAN_FIX
+//#define FAN_FIX
 
 // Use your own printer name - Uncomment both lines
 #define CUSTOM_PRINTER_NAME
@@ -301,7 +358,7 @@
 // PID BED TEMPERATURE CONTROL ---------------------
 // If you want PID Bed Temperature control enable the below line. You will need to tune it for your machine.
 // See the PID Bed setup guide here: https://www.th3dstudio.com/hc/guides/diy-guides/p-i-d-bed-calibration-guide/
-//#define ENABLE_PIDBED
+#define ENABLE_PIDBED
 
 // Z PROBE OFFSET WIZARD ---------------------------
 // Marlin has a Z Probe Offset Wizard now. If you want to enable this, uncomment the below line.
@@ -1462,7 +1519,7 @@
     #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 96.5 }
   #endif
 
-  #define SHOW_BOOTSCREEN
+  //#define SHOW_BOOTSCREEN
 
   #define EXTRUDERS 1
 
@@ -1498,8 +1555,8 @@
       #define Z_MAX_POS 500
       #define MACHINE_SIZE "235x235x500"
     #else
-      #define X_BED_SIZE 220
-      #define Y_BED_SIZE 220
+      #define X_BED_SIZE 235
+      #define Y_BED_SIZE 235
       #define Z_MAX_POS 250
       #define MACHINE_SIZE "235x235x250"
     #endif
@@ -1560,13 +1617,13 @@
   #define TEMP_SENSOR_PROBE 0
   #define TEMP_SENSOR_CHAMBER 0
 
-  #define DEFAULT_Kp 28.72
-  #define DEFAULT_Ki 2.62
-  #define DEFAULT_Kd 78.81
+  #define DEFAULT_Kp 21.41
+  #define DEFAULT_Ki 1.59
+  #define DEFAULT_Kd 71.92
   
-  #define DEFAULT_bedKp 462.10
-  #define DEFAULT_bedKi 85.47
-  #define DEFAULT_bedKd 624.59
+  #define DEFAULT_bedKp 99.38
+  #define DEFAULT_bedKi 19.41
+  #define DEFAULT_bedKd 339.2
 
   #define ENDSTOPPULLUPS
 
