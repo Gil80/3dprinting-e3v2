@@ -158,8 +158,6 @@
  * These settings allow Marlin to tune stepper driver timing and enable advanced options for
  * stepper drivers that support them. You may also override timing options in Configuration_adv.h.
  *
- * A4988 is assumed for unspecified drivers.
- *
  * Use TMC2208/TMC2208_STANDALONE for TMC2225 drivers and TMC2209/TMC2209_STANDALONE for TMC2226 drivers.
  *
  * Options: A4988, A5984, DRV8825, LV8729, L6470, L6474, POWERSTEP01,
@@ -1015,14 +1013,14 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80.19, 80.23, 400, 96.5 }  // Ender Configs
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80.19, 400, 673 }  // Gil's Ender Configs with DD Orbiter
 
 /**
  * Default Max Feed Rate (linear=mm/s, rotational=°/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 15, 25 }  // Ender Configs //Gil reduced to 15 based on The3d
+#define DEFAULT_MAX_FEEDRATE          { 300, 300, 15, 120 }  // Ender Configs //Gil reduced to 15 based on The3d //Gil changed E from 25 to 120 for DD Orbiter
 
 #define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2  // MRiscoC allows higher limits
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1035,7 +1033,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 100, 1000 }  // Ender Configs //Gil Changed to 1000. Default 500.
+#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 100, 3000 }  // Ender Configs //Gil Changed to 3000. Default 500.
 
 #define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2  // MRiscoC allows higher limits
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1050,8 +1048,8 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          700    // X, Y, Z and E acceleration for printing moves  // Ender Configs //Gil changed to 700. Default 500
-#define DEFAULT_RETRACT_ACCELERATION  800    // E acceleration for retracts  // Ender Configs
+#define DEFAULT_ACCELERATION          500    // X, Y, Z and E acceleration for printing moves  // Ender Configs
+#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts  // Ender Configs
 #define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves  // Ender Configs
 
 /**
@@ -1064,8 +1062,8 @@
  */
 #define CLASSIC_JERK  // Ender Configs
 #if ENABLED(CLASSIC_JERK)
-  #define DEFAULT_XJERK 15  // Ender Configs // Gil changed to 15. default 8.
-  #define DEFAULT_YJERK 15  // Ender Configs // Gil changed to 15. default 8.
+  #define DEFAULT_XJERK 8.0  // Ender Configs
+  #define DEFAULT_YJERK 8.0  // Ender Configs
   #define DEFAULT_ZJERK  0.4  // Ender Configs
   //#define DEFAULT_IJERK  0.3
   //#define DEFAULT_JJERK  0.3
@@ -1078,7 +1076,7 @@
 
   #define LIMITED_JERK_EDITING        // Limit edit via M205 or LCD to DEFAULT_aJERK * 2  // Ender Configs
   #if ENABLED(LIMITED_JERK_EDITING)
-    #define MAX_JERK_EDIT_VALUES { 15, 15, 1, 20 } // ...or, set your own edit limits  // MRiscoC allows higher limits
+    #define MAX_JERK_EDIT_VALUES { 20, 20, 1, 20 } // ...or, set your own edit limits  // MRiscoC allows higher limits
   #endif
 #endif
 
@@ -1281,17 +1279,17 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -54, -10.25, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { -58, -5, 0 } //Gil Changed for HMG6 EZABL_Mount_Medium_18mm.stl
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 30  // MRiscoC Avoid clips on borders
+#define PROBING_MARGIN 10  // MRiscoC Avoid clips on borders
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (200*60)  // MRiscoC increase travel speed between probes
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (15*60)  // MRiscoC increase probe Z speed
+#define Z_PROBE_FEEDRATE_FAST (8*60)  // MRiscoC increase probe Z speed //Gil - default value was 16. Th3d recommends 15. I changed to Ender default of 8.
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
@@ -1344,6 +1342,7 @@
 #define MULTIPLE_PROBING 2  // MRiscoC Enabled
 #define EXTRA_PROBING    1  // MRiscoC Enabled
 
+
 /**
  * Z probes require clearance when deploying, stowing, and moving between
  * probe points to avoid hitting the bed and other hardware.
@@ -1358,16 +1357,16 @@
  * Example: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE    5 // Z Clearance for Deploy/Stow  // MRiscoC EZABL from TH3DStudio
-#define Z_CLEARANCE_BETWEEN_PROBES  3 // Z Clearance between probe points  // MRiscoC EZABL from TH3DStudio
-#define Z_CLEARANCE_MULTI_PROBE     3 // Z Clearance between multiple probes  // EZABL from TH3DStudio
-#define Z_AFTER_PROBING           5   // Z position after probing is done
+#define Z_CLEARANCE_DEPLOY_PROBE   3 // Z Clearance for Deploy/Stow  // MRiscoC EZABL from TH3DStudio
+#define Z_CLEARANCE_BETWEEN_PROBES  2 // Z Clearance between probe points  // MRiscoC EZABL from TH3DStudio
+#define Z_CLEARANCE_MULTI_PROBE     2 // Z Clearance between multiple probes  // EZABL from TH3DStudio
+//#define Z_AFTER_PROBING           5 // Z position after probing is done
 
-#define Z_PROBE_LOW_POINT          -3 // Farthest distance below the trigger-point to go before stopping  // MRiscoC EZABL from TH3DStudio
+#define Z_PROBE_LOW_POINT          -2 // Farthest distance below the trigger-point to go before stopping  // MRiscoC EZABL from TH3DStudio
 
 // For M851 give a range for adjusting the Z probe offset
-#define Z_PROBE_OFFSET_RANGE_MIN -5
-#define Z_PROBE_OFFSET_RANGE_MAX 1
+#define Z_PROBE_OFFSET_RANGE_MIN -20
+#define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy
 #define Z_MIN_PROBE_REPEATABILITY_TEST  // MRiscoC Enable M48 repeatability test
@@ -1451,7 +1450,7 @@
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
+#define INVERT_E0_DIR true  //Gil set to `true` for DD Orbiter with the motor facing backwards
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -1529,7 +1528,7 @@
 #if ENABLED(MIN_SOFTWARE_ENDSTOPS)
   #define MIN_SOFTWARE_ENDSTOP_X
   #define MIN_SOFTWARE_ENDSTOP_Y
-//#define MIN_SOFTWARE_ENDSTOP_Z
+  #define MIN_SOFTWARE_ENDSTOP_Z
   #define MIN_SOFTWARE_ENDSTOP_I
   #define MIN_SOFTWARE_ENDSTOP_J
   #define MIN_SOFTWARE_ENDSTOP_K
@@ -1748,7 +1747,7 @@
 
     // Beyond the probed grid, continue the implied tilt?
     // Default is to maintain the height of the nearest edge.
-    #define EXTRAPOLATE_BEYOND_GRID  // MRiscoC Disabled for better precision at edges
+    //#define EXTRAPOLATE_BEYOND_GRID  // MRiscoC Disabled for better accuracy at edges
 
     //
     // Experimental Subdivision of the grid by Catmull-Rom method.
@@ -1803,6 +1802,8 @@
  * Include a guided procedure if manual probing is enabled.
  */
 //#define LCD_BED_LEVELING
+
+#define MESH_EDIT_MENU  // MRiscoC Enable menu for edit mesh leveling data
 
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
@@ -1883,7 +1884,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (8*60) }  // MRiscoC Homing speed-up
+#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (10*60) }  // MRiscoC Homing speed-up
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1921,14 +1922,14 @@
 #define SKEW_CORRECTION
 
 #if ENABLED(SKEW_CORRECTION)
-  // Input all length measurements here:
-  #define XY_DIAG_AC 282.8427124746
-  #define XY_DIAG_BD 282.8427124746
-  #define XY_SIDE_AD 200
+  // Input all length measurements here:  //Gil changes these values from excel dated 29.06.2022
+  #define XY_DIAG_AC 99.73666666667 
+  #define XY_DIAG_BD 100.1666666667
+  #define XY_SIDE_AD 70.746544555
 
   // Or, set the default skew factors directly here
   // to override the above measurements:
-  #define XY_SKEW_FACTOR -0.003
+  //#define XY_SKEW_FACTOR 0.0
 
   //#define SKEW_CORRECTION_FOR_Z
   #if ENABLED(SKEW_CORRECTION_FOR_Z)
@@ -2004,12 +2005,12 @@
 #define PREHEAT_2_TEMP_HOTEND 230
 #define PREHEAT_2_TEMP_BED     80
 #define PREHEAT_2_TEMP_CHAMBER 35
-#define PREHEAT_2_FAN_SPEED     128 // Value from 0 to 255
+#define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_3_LABEL       "CUSTOM"
 #define PREHEAT_3_TEMP_HOTEND 240
 #define PREHEAT_3_TEMP_BED     60
-#define PREHEAT_3_FAN_SPEED   128
+#define PREHEAT_3_FAN_SPEED   0
 
 /**
  * Nozzle Park
