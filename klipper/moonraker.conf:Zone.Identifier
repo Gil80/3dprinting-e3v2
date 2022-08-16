@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=http://myprinter.local/config
+HostUrl=http://myprinter.local/server/files/config/moonraker.conf
