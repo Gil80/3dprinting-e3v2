@@ -1,0 +1,8 @@
+1. In Raspbian(Ras[berry Pi OS), open the Terminal App
+2. Go to the root directory and open the
+/boot/config.txt file
+3. Open and edit the "config.txt" file by typing:
+sudo nano config.txt
+4. Add the line:
+dtoverlay=gpio-fan,gpiopin=18,temp=55000
+5. Save changes and exit by press Ctrl+X
