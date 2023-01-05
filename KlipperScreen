@@ -1,0 +1,12 @@
+Use 64bit acrchitecture
+Follow "Cannot open virtual Console" at https://klipperscreen.readthedocs.io/en/latest/Troubleshooting/
+mostly this helped: sudo bash -c "echo needs_root_rights=yes>>/etc/X11/Xwrapper.config"
+run `sudo raspi-config` and set: 1System Options
+└──S5 Boot / Auto Login
+   └──B1 Console
+
+Still in `raspi-config` install the older GPU driver:
+option 6 - Advanced
+option A2 - GL Driver
+option G1 – Legacy
+<OK>
