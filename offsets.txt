@@ -1,3 +1,0 @@
-x home -4mm
-z probe x -54mm
-z probe y -10.25
