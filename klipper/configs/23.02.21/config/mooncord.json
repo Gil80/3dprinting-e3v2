@@ -1,0 +1,19 @@
+{
+    "connection": {
+        "moonraker_url": "http://mainsail.local/",
+        "moonraker_token": "",
+        "bot_token": "MTA3Njg0MDA2OTU0Mjk2OTM2NA.GvuXUu.m9Ot2Q1g-pG7H7BN1vqgPuNhLJWrk-yummcUXw"
+    },
+    "permission": {
+        "controllers": {
+            "users": ""
+        }
+    },
+    "webcam": {
+        "url": "http://mainsail.local/webcam/?action=snapshot"
+    },
+    "tmp": {
+        "controller_tag": "SkullCandy#5765"
+    },
+    "tmp_path": "/tmp/MoonCord"
+}
