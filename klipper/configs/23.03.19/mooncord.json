@@ -1,0 +1,56 @@
+{
+    "connection": {
+        "moonraker_url": "http://192.168.1.12/",
+        "moonraker_token": "",
+        "bot_token": "MTA3Njg0MDA2OTU0Mjk2OTM2NA.GV1Tj0.CCXgIneey2O4Kp5lUIIgOUwZzP6dzz7GHJh2L8"
+    },
+    "permission": {
+        "controllers": {
+            "users": "141719550600151041"
+        }
+    },
+    "webcam": {
+        "url": "http://192.168.1.12/webcam/?action=snapshot"
+    },
+    "status": {
+        "update_interval": 25,
+        "use_percent": true,
+        "min_interval": 15,
+        "gcode_timeout": 600,
+        "before": {
+            "enable": false,
+            "delay": 0,
+            "execute": []
+        },
+        "after": {
+            "enable": false,
+            "delay": 0,
+            "execute": []
+        }
+  },
+
+  "notifications": {
+        "blacklist": [],
+        "moonraker_throttle": true,
+        "timelapse": true,
+        "m117_notification": {
+            "enable": true,
+            "blacklist": [
+                "/(Rendering (\\||\\/|-|\\\\))/g",
+                "/^.*(Time Left).*$/g",
+                "/^.*(Layer).*$/g"
+            ],
+            "whitelist": []
+        },
+        "temp_target_notification": {
+            "enable": true,
+            "temp_offset": 2,
+            "temp_duration": 5,
+            "delay": 30
+        }
+    },
+    "printer_name": "Ender3 V3",
+    "custom_info": "Thanks for installing MoonCord and Happy Printing ❤",
+    "tmp_path": "/tmp/MoonCord" 
+}
+
