@@ -1,0 +1,31 @@
+# force move Z up by 2mm for EZABL
+FORCE_MOVE STEPPER=stepper_z DISTANCE=2 VELOCITY=5 ACCEL=1000
+
+#The PGP parameter is shorthand for "Print Generated Points".
+If PGP=1 is set, the generated probed points will be output to the terminal
+BED_MESH_OUTPUT PGP=[0 | 1]
+
+### Input shaper related commands ###
+SET_STEPPER_ENABLE STEPPER=extruder ENABLE=0 -> This will disable the extruder ; to reduce noise from the motor
+SET_STEPPER_ENABLE STEPPER=extruder ENABLE=1 -> This will enable the extruder
+ACCELEROMETER_QUERY
+MEASURE_AXES_NOISE
+TEST_RESONANCES AXIS=X FREQ_END=100 
+~/klipper/scripts/calibrate_shaper.py /tmp/resonances_x_*.csv -o /tmp/shaper_calibrate_x.png
+~/klipper/scripts/calibrate_shaper.py /tmp/resonances_y_*.csv -o /tmp/shaper_calibrate_y.png
+
+### Ringing Tower ###
+SET_VELOCITY_LIMIT ACCEL_TO_DECEL=7000
+SET_PRESSURE_ADVANCE EXTRUDER=extruder ADVANCE=0
+TUNING_TOWER COMMAND=SET_VELOCITY_LIMIT PARAMETER=ACCEL START=1500 STEP_DELTA=500 STEP_HEIGHT=5
+
+PID_CALIBRATE HEATER=extruder TARGET=170
+
+
+BED_MESH_PROFILE LOAD=<name> SAVE=<name> REMOVE=<name>
+
+### Crowsnest ####
+/dev/video is for legacy stack. Legacy stack is getting enabled with camera_auto_detect=0 and start_x=1 inside your /boot/config.txt.
+/base/soc/... is for libcamera. That is getting enabled if you set camera_auto_detect=1 inside your /boot/config.txt. For libcamera you need some other settings too that it will work.
+[6:02 PM]
+camera-streamer supports both methods, so legacy stack should be preferred if you want to use klipperscreen with picam, as libcamera got a lot of problems with klipperscreen/DSI touchscreens
